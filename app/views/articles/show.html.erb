@@ -1,0 +1,33 @@
+
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
+ 
+<p>
+  <strong>Text:</strong>
+  <%= @article.text %>
+</p>
+
+<h2>Comments</h2>
+<%= render @article.comments %>
+ 
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
+
+
+
+<%= @article.likes.count %>
+<%= (@article.likes.count) == 1 ? 'Like' : 'Likes' %>
+
+<% previous_like = @article.likes.find { |like| like.user_id == current_user.id} %>
+<%if previous_like %>
+  <%= button_to 'Unlike', article_like_path(@article, previous_like), method: :delete%>
+  <% else %>
+  <%= button_to 'Like', article_likes_path(@article), method: :article%>
+<% end %>
+
+<%= link_to 'All Articles', all_articles_path(@article) %> |
+ 
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
